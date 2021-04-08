@@ -1,0 +1,103 @@
+body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Oxygen', sans-serif;
+}
+
+.bg{
+    background-color: transparent;
+    width: 0;
+    height: 100%;
+    position: absolute;
+    pointer-events: all;
+}
+.bg.active{
+    width:100%;
+}
+h1{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d1d1d1;
+}
+nav button{
+    border: none;
+    border-radius: 20px;
+    padding: 1em 2em;
+    background-color: #727070;
+    text-transform: uppercase;
+    cursor:pointer;
+}
+
+section article {
+    list-style: none;
+    width: max-content;
+    border-radius: 20px;
+    border:1px solid black; 
+    padding: 1em;
+    width: 400px;
+    margin: 2em auto;
+}
+section article p {
+    padding: .5em 0;
+}
+
+form{
+    width: 180px;
+    border-radius: 20px;
+    padding: 4em;
+    position: fixed;
+    top:calc(50% - 180px);
+    right:calc(50% - 180px);
+    background-color: #fff;
+    opacity: 0;
+    transition: opacity .35s ease-in-out;
+    z-index: 20;
+}
+form label{
+    font-weight: 700;
+}
+form input{
+    width: 100%;
+    margin: .5em 0;
+    padding: .2em;
+}
+form [type=submit]{
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background-color: forestgreen;
+    color: white;
+    padding: 1em;
+    margin: 1em auto;
+}
+
+form [type=submit]:hover{
+    background-color: rgb(31, 189, 31);
+}
+
+section{
+    width:80%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    border:1px solid black;   
+}
+
+article div{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+article button{
+    cursor: pointer;
+    padding: 1em;
+    width: max-content;
+    text-align: center;
+}

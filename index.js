@@ -1,172 +1,213 @@
 const url = "https://6057e432c3f49200173ad08d.mockapi.io/api/v1/employees";
-
 const employer = document.querySelector('#employer');
+const form = document.querySelector('form');
+const allEmploy = [];
+const btnCreate = document.querySelector('.create');
 
+btnCreate.addEventListener('click',function(e){
+    e.preventDefault();
+    form.id = e.target.id;
+    form.lastElementChild.name = "submit";
+    form.style.opacity = "1";
+});
 
-//request ajax for all Data
-function reqData(){
+form.addEventListener('submit',function(e){
+    e.preventDefault();
+
+    const btnName = e.target[4].name;
+    const Mail = e.target[0].value;
+    const job = e.target[1].value;
+    const name = e.target[2].value;
+    const lastName = e.target[3].value;
+
+    if(btnName === "submit"){
+        createData(Mail,job,name,lastName);
+        form.style.display = 'none';
+    }else if( btnName === "edit"){
+        editData(e.target.id,Mail,job,name,lastName);  
+    }
+})
+//---------------request for create new userData
+function createData(email,job,name,lastName){
+    const params = {
+        email: email,
+        job_title:job,
+        last_name:lastName,
+        name:name
+    }
+    let xhr = new XMLHttpRequest();
+ 
+    xhr.onreadystatechange = function(){
+        
+        if(this.status === 201 && this.readyState === 4 ){
+            const data = JSON.parse(xhr.responseText);
+            alert("Le nouvel employé(e) a bien été ajouté(e)");
+            reqData(data);
+            form.style.opacity =" 0";
+        }else if(this.status === 404 && this.readyState === 4){          
+            alert("Une erreur est survenue, veuillez rafraîchir la page")
+
+        }else if(this.status === 400 && this.readyState === 4){
+            alert("Une erreur est survenue,la requête n'a pas abouti")
+        }   
+    };
+    xhr.open("POST",url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(params));
+}
+
+//-----------------------------request to edit userData
+function editData(id,email,job,name,lastName){
+    const params = {
+        email: email,
+        job_title:job,
+        last_name:lastName,
+        name:name
+    }
+    let urlEdit = url + "/" + id;
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function(){
+        
+        if(this.status === 200 && this.readyState === 4 ){
+            const data = JSON.parse(xhr.responseText);
+            alert("La modification a bien été pris en compte")
+            reqData(data);
+            form.style.opacity = "0";
+        }else if(this.status === 404 && this.readyState === 4){
+            
+            alert("Une erreur est survenue, veuillez rafraîchir la page")
+
+        }else if(this.status === 400 && this.readyState === 4){
+
+            alert("Une erreur est survenue,la requête n'a pas abouti")
+        }
+    };
+    xhr.open("PUT",urlEdit);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(params));
+
+}
+/**
+ *  
+ *         request for delete userData
+ *    
+*/
+ function removeData(elem){
+    let urlDel = url + "/" + elem.target.id;
 
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
-        if(xhr.readyState === 4 && xhr.status === 200){
-
+        console.log(this.readyState)
+        if(this.status === 200 && this.readyState === 4 ){
+            alert("L'utilisateur a bien été supprimé");
+            elem.target.parentElement.parentElement.remove();
+        }else if(this.status === 404 && this.readyState === 4){
+            alert("Une erreur est survenue, la page est introuvable")
+        }else if(this.status === 400 && this.readyState === 4){
+            alert("Une erreur est survenue,la requête n'a pas abouti")
+        }  
+    }
+    xhr.open("DELETE",urlDel);
+    xhr.send();
+}
+/**
+ * 
+ *                              request ajax for all Data
+ */
+function reqData(){
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        
+        if(this.status === 200 && this.readyState === 4 ){
             const data = JSON.parse(xhr.responseText);
-            console.log(data);
-
             showData(data);
+        }else if(this.status === 404 && this.readyState === 4){
+
+            alert("Une erreur est survenue, veuillez rafraîchir la page")
+
+        }else if(this.status === 400 && this.readyState === 4){
+
+            alert("Une erreur est survenue,la requête n'a pas abouti")
         }
     }
     xhr.open("GET",url);
     xhr.send();
 }
-
-function createData(email,lastName,name,job){
-
-    let xhr = new XMLHttpRequest();
-    const param = {
-        email: email,
-        id:employer.children.length+1,
-        job_title:job,
-        last_name:lastName,
-        name:name
-    }
-    xhr.onreadystatechange = function(){
-        
-        if(xhr.readyState === 4 && xhr.status === 201){
-            const data = JSON.parse(xhr.responseText);
-        }
-    };
-    xhr.open("POST",url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(param));
+reqData(); 
+/**
+ * 
+ *               Create Article
+ */
+function createElem(text,elem,id){
+    const element = document.createElement(elem);
+    element.innerText = text;
+    element.id = id;
+    return element;
 }
-
-function removeData(target){
-    let urlDel = url + "/" + target;
-
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState === 4 && xhr.status === 200){
-
-            const data = JSON.parse(xhr.responseText);
-        }
-    }
-    xhr.open("DELETE",urlDel);
-    xhr.send();
+function createBtn(text,name,id){
+    const element = document.createElement('button');
+    element.innerText = text;
+    element.id = id;
+    element.name = name;
+    return element;
 }
-
-
-function editData(email,lastName,name,job,target){
-
-    let urlEdit = url + "/" + target;
-
-    let xhr = new XMLHttpRequest();
-    const param = {
-        email: email,
-        id:employer.children.length+1,
-        job_title:job,
-        last_name:lastName,
-        name:name
-    }
-    xhr.onreadystatechange = function(){
-        
-        if(xhr.readyState === 4 && xhr.status === 200){
-            const data = JSON.parse(xhr.responseText);
-            console.log(data);
-            
-        }
-    };
-    xhr.open("PUT",urlEdit);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(param));
-
-}
-
-//Function for HTML/DOM
-function createUser(){
-    let email = window.prompt('Entrez son mail : ');
-
-    let lastName = window.prompt('Entrez son nom de famille : ');
-
-    let name = window.prompt('Entrez son prénom : ');
-
-    let job = window.prompt('Entrez son Travail : ');
-    createData(email,lastName,name,job);
-}
-
-function editUser(e,htmlEmail,htmlLastName,htmlName,htmlJob){
-    let email = window.prompt('Entrez le mail pour le modifier : ');
-    let lastName = window.prompt('Entrez le nom de famille a modifier : ');
-    let name = window.prompt('Entrez le prénom a modifier : ');
-    let job = window.prompt('Entrez son Travail : ');
-
-    /*
-    htmlEmail.innertext = email;
-    htmlLastName.innertext = lastName;
-    htmlName.innertext = name;
-    htmlJob.innertext = job;
-     */
-    editData(email,lastName,name,job,e);
-
-}
-
-function deleteUser(e){
-    let del = window.prompt('ête vous sur de vouloir faire sa ?');
-    console.log(del);
-    if(del == ""){
-        e.target.parentElement.remove();
-        removeData(e.target.id);
-    } 
-}
+/**
+ * 
+ *               Create All user in HTML
+ */
 function showData(data){
 
-    for(let i=0;i< 10;i++){
-        const ul = document.createElement('ul');
-        const email = document.createElement('li')
-        email.innerText = data[i].email;
-       
-
-        const job = document.createElement('li');
-        job.innerText = data[i].job_title;
-        const lastName = document.createElement('li');
-        lastName.innerText = data[i].last_name;
-        const name = document.createElement('li');
-        name.innerText = data[i].name;
-
-        const btnCreate = document.createElement('button');
-        btnCreate.id = data[i].id;
-        btnCreate.innerText = 'Create';
-
-        const btnDelete = document.createElement('button');
-        btnDelete.id = data[i].id;
-        btnDelete.innerText = 'Delete';
-
-        const btnEdit = document.createElement('button');
-        btnEdit.id = data[i].id;
-        btnEdit.innerText = 'Edit';
-
-        btnDelete.addEventListener('click',function(e) {
-            deleteUser(e);
-        });
-        btnEdit.addEventListener('click',function(e){
-            editUser(e.target.id);
-        });
-        btnCreate.addEventListener('click',function(){
-            createUser();
-        });
+    employer.innerHTML = '';
+    for(let i=0;i< data.length;i++){
+        //container
+        const article = createElem(null,'article',data[i].id);
 
         //Data
-        ul.appendChild(email);
-        ul.appendChild(job);
-        ul.appendChild(name);
-        ul.appendChild(lastName);
+        const labelEmail =  createElem("Email : ",'span',null);
+        const email = createElem(data[i].email,'p',null);
+        email.prepend(labelEmail);
+
+        const labelJob = createElem("Job-title : ",'span',null);
+        const job = createElem(data[i].job_title,'p',null);
+        job.prepend(labelJob);
+
+        const labelLastName = createElem("Last-Name : ",'span',null);
+        const lastName = createElem(data[i].last_name,'p',null);
+        lastName.prepend(labelLastName);
+
+        const labelName = createElem("NAME : ",'span',null);
+        const name = createElem(data[i].name,'p',null);
+        name.prepend(labelName);
+
+        //Button
+        const btnDelete = createBtn('Delete','Delete',data[i].id);
+        const btnEdit = createBtn('Edit',"edit",data[i].id);
+        const btnGrp = document.createElement('div');
+        btnGrp.appendChild(btnEdit);
+        btnGrp.appendChild(btnDelete);
+
+        //Add event for all button
+        btnDelete.addEventListener('click',function(e) {
+            removeData(e);
+        });
+        btnEdit.addEventListener('click',function(e){
+            form.id = e.target.id;
+            form.lastElementChild.name = "edit";
+            form.style.opacity = "1"; 
+            bg.classList.add("active");          
+        });        
+        //Data
+        article.appendChild(email);
+        article.appendChild(job);
+        article.appendChild(name);
+        article.appendChild(lastName);
 
         //button
-        ul.appendChild(btnCreate);
-        ul.appendChild(btnEdit);
-        ul.appendChild(btnDelete);
+        article.appendChild(btnGrp);
         
-        employer.appendChild(ul);
+        //Data in container
+        employer.appendChild(article);
     }
 }
-reqData();

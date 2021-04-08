@@ -4,12 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
     <title>AjaxRequest</title>
 </head>
 <body>
+    <div class="bg"></div>
+    <nav>
+        <h1>My List to employ</h1>
+        <ul>
+            <button class="create" name="submit">Create</button>
+        </ul>
+    </nav>
+    <h1> </h1>
+    <form>
+        <label for="email">Email :</label>
+        <input type="email" name="email" id="email">
+        <label for="job">Job Title : </label>
+        <input type="text" name="job" id="job">
+        <label for="name">Name : </label>
+        <input type="text"  name="name" id="name">
+        <label for="lastName">Last Name : </label>
+        <input type="text" name="lastName" id="lastName">
+
+        <input type="submit" name="submit">
+
+    </form>
     <section id="employer">
-
-
     </section>
 
     <script src="./index.js"></script>
