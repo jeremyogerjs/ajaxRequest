@@ -59,20 +59,6 @@ function createBtn(text,name,id){
 }
 /**
  * 
- *      Function append or prepend elem
- *  
- *  
- */
-function prepend(container,contenu){
-    const element = container.prepend(contenu);
-    return element;
-}
-function append(container,contenu){
-    const element = container.appendChild(contenu);
-    return element;
-}
-/**
- * 
  *               Create All user in HTML
  */
 function showData(data){
@@ -84,7 +70,6 @@ function showData(data){
  * 
  *               Create unique article
  */
-
 function CreateArticle(data){
     
         //container
@@ -110,9 +95,9 @@ function CreateArticle(data){
         //Button
         const btnDelete = createBtn('Delete','Delete',data.id);
         const btnEdit = createBtn('Edit',"edit",data.id);
-        const btnGrp = document.createElement('div');
-        append(btnGrp,btnEdit);
-        append(btnGrp,btnDelete);
+        const btnGrp = createElem(null,'div',null);
+        btnGrp.appendChild(btnEdit);
+        btnGrp.appendChild(btnDelete);
 
         //Add event for all button
         btnDelete.addEventListener('click',function(e) {
@@ -121,18 +106,18 @@ function CreateArticle(data){
         btnEdit.addEventListener('click',function(e){
             form.id = e.target.id;
             form.lastElementChild.name = "edit";
-            form.style.opacity = "1"; 
+            form.style.opacity = "1";
+            form.style.pointerEvents = "all";
             editArticle = e.target.parentElement.parentElement;          
         });        
         //Data
-        append(article,email);
-        append(article,job);
-        append(article,name);
-        append(article,lastName);
-
+        article.appendChild(email);
+        article.appendChild(job);
+        article.appendChild(name);
+        article.appendChild(lastName); 
         //button
-        append(article,btnGrp);
+        article.appendChild(btnGrp);
         
         //Data in container
-        append(employer,article);
+        employer.appendChild(article);
 }

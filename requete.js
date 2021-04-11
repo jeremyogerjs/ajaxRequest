@@ -21,13 +21,15 @@ const url = "https://6057e432c3f49200173ad08d.mockapi.io/api/v1/employees";
         if(this.status === 201 && this.readyState === 4 ){
             const data = JSON.parse(xhr.responseText);
             alert("Le nouvel employé(e) a bien été ajouté(e)");
-            CreateArticle(data)
             form.style.opacity =" 0";
+            form.style.pointerEvents = "none";
+            CreateArticle(data)
         }else if(this.status === 404 && this.readyState === 4){          
             alert("Une erreur est survenue, veuillez rafraîchir la page");
-            
+            form.style.pointerEvents = "none";
         }else if(this.status === 400 && this.readyState === 4){
             alert("Une erreur est survenue,la requête n'a pas abouti");
+            form.style.pointerEvents = "none";
         }   
     };
     xhr.open("POST",url);
@@ -57,16 +59,19 @@ function editData(id,email,job,name,lastName){
             const data = JSON.parse(xhr.responseText);
             alert("La modification a bien été pris en compte");
             form.style.opacity = "0";
+            form.style.pointerEvents = "none";
             editUser(editArticle,0,"Email : ",data.email);
-            editUser(editArticle,1,"Job-title : : ",data.job_title);
+            editUser(editArticle,1,"Job-title : ",data.job_title);
             editUser(editArticle,2,"NAME : ",data.name);
             editUser(editArticle,3,"Last-Name : ",data.last_name);
 
         }else if(this.status === 404 && this.readyState === 4){
             alert("Une erreur est survenue, veuillez rafraîchir la page");
+            form.style.pointerEvents = "none";
 
         }else if(this.status === 400 && this.readyState === 4){
             alert("Une erreur est survenue,la requête n'a pas abouti");
+            form.style.pointerEvents = "none";
         }
     };
     xhr.open("PUT",urlEdit);
