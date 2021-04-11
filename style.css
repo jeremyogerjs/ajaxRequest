@@ -20,10 +20,13 @@ h1{
     text-transform: uppercase;
 }
 nav{
+    position: fixed;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #d1d1d1;
+    top: 0;
 }
 nav button{
     border: none;
