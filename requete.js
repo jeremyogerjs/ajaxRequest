@@ -13,7 +13,7 @@ const url = "https://6057e432c3f49200173ad08d.mockapi.io/api/v1/employees";
         job_title:job,
         last_name:lastName,
         name:name
-    }
+    };
     let xhr = new XMLHttpRequest();
  
     xhr.onreadystatechange = function(){
@@ -21,21 +21,19 @@ const url = "https://6057e432c3f49200173ad08d.mockapi.io/api/v1/employees";
         if(this.status === 201 && this.readyState === 4 ){
             const data = JSON.parse(xhr.responseText);
             alert("Le nouvel employé(e) a bien été ajouté(e)");
-            form.style.opacity =" 0";
-            form.style.pointerEvents = "none";
             CreateArticle(data)
         }else if(this.status === 404 && this.readyState === 4){          
-            alert("Une erreur est survenue, veuillez rafraîchir la page");
+            alert("Une erreur est survenue, veuillez rafraîchir la page et réessayez");
             form.style.pointerEvents = "none";
         }else if(this.status === 400 && this.readyState === 4){
-            alert("Une erreur est survenue,la requête n'a pas abouti");
+            alert("Une erreur est survenue,la requête n'a pas abouti, veuillez réessayez");
             form.style.pointerEvents = "none";
         }   
     };
     xhr.open("POST",url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(params));
-}
+};
 
 /**
  * 
@@ -48,7 +46,7 @@ function editData(id,email,job,name,lastName){
         job_title:job,
         last_name:lastName,
         name:name
-    }
+    };
     let urlEdit = url + "/" + id;
 
     let xhr = new XMLHttpRequest();
@@ -58,8 +56,7 @@ function editData(id,email,job,name,lastName){
         if(this.status === 200 && this.readyState === 4 ){
             const data = JSON.parse(xhr.responseText);
             alert("La modification a bien été pris en compte");
-            form.style.opacity = "0";
-            form.style.pointerEvents = "none";
+
             editUser(editArticle,0,"Email : ",data.email);
             editUser(editArticle,1,"Job-title : ",data.job_title);
             editUser(editArticle,2,"NAME : ",data.name);
@@ -77,7 +74,7 @@ function editData(id,email,job,name,lastName){
     xhr.open("PUT",urlEdit);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(params));
-}
+};
 /**
  *  
  *         request for delete userData
@@ -97,13 +94,13 @@ function removeData(elem){
         }else if(this.status === 400 && this.readyState === 4){
             alert("Une erreur est survenue,la requête n'a pas abouti")
         }  
-    }
+    };
     xhr.open("DELETE",urlDel);
     xhr.send();
-}
+};
 /**
  * 
- *                              request ajax for all Data
+ *                              request GET for all Data in API
  */
 function reqData(){
     let xhr = new XMLHttpRequest();
@@ -120,8 +117,8 @@ function reqData(){
 
             alert("Une erreur est survenue,la requête n'a pas abouti")
         }
-    }
+    };
     xhr.open("GET",url);
     xhr.send();
-}
+};
 reqData(); 

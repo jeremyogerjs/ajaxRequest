@@ -28,7 +28,7 @@ nav{
     background-color: #d1d1d1;
     top: 0;
 }
-nav button{
+button{
     border: none;
     border-radius: 20px;
     padding: 1em 2em;
@@ -60,7 +60,7 @@ form{
     background-color: #fff;
     opacity: 0;
     transition: opacity .35s ease-in-out;
-    z-index: 20;
+    z-index: 2;
     pointer-events: none;
 }
 form label{
@@ -84,6 +84,16 @@ form [type=submit]{
 form [type=submit]:hover{
     background-color: rgb(31, 189, 31);
 }
+form span{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: xx-large;
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+}
+
 
 section{
     width:80%;
