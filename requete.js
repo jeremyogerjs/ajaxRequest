@@ -57,10 +57,13 @@ function editData(id,email,job,name,lastName){
             const data = JSON.parse(xhr.responseText);
             alert("La modification a bien été pris en compte");
 
-            //editUser(editArticle,0,"Email : ",data.email);
-            //editUser(editArticle,1,"Job-title : ",data.job_title);
-            editUser(editArticle,0,"NAME : ",data.name);
-            editUser(editArticle,1,"Last-Name : ",data.last_name);
+            editUser(uniqueArt,1,"Name : ",data.name);
+            editUser(uniqueArt,2,"Last Name : ",data.last_name);
+            editUser(uniqueArt,3,"Job Title : ",data.job_title);
+            editUser(uniqueArt,4,"Email : ",data.email);
+
+            editUser(editArticle,0,"Name : ",data.name);
+            editUser(editArticle,1,"Last Name : ",data.last_name);
 
         }else if(this.status === 404 && this.readyState === 4){
             alert("Une erreur est survenue, veuillez rafraîchir la page");
@@ -80,17 +83,23 @@ function editData(id,email,job,name,lastName){
  *         request for delete userData
  *    
 */
+function removeUser(elem){
+    
+    for(let i = 1; i < elem.parentElement.children.length-2;i++){
+        elem.parentElement.children[i].innerText = '';
+    }
+}
 function removeData(elem){
     let urlDel = url + "/" + elem.target.id;
 
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
-        console.log(this.readyState)
         if(this.status === 200 && this.readyState === 4 ){
             alert("L'utilisateur a bien été supprimé");
-            elem.target.parentElement.parentElement.remove();
+            removeUser(elem.target);
+            resetStyle(elem.target.parentElement)
         }else if(this.status === 404 && this.readyState === 4){
-            alert("Une erreur est survenue, la page est introuvable")
+            alert("Une erreur est survenue, l'utilisateur est introuvable veuillez rafraichir la page");
         }else if(this.status === 400 && this.readyState === 4){
             alert("Une erreur est survenue,la requête n'a pas abouti")
         }  
@@ -110,10 +119,13 @@ function removeData(elem){
         
         if(this.status === 200 && this.readyState === 4 ){
             const data = JSON.parse(xhr.responseText);
-            console.log(data);
+            editUser(uniqueArt,1,"Name : ",data.name);
+            editUser(uniqueArt,2,"Last Name : ",data.last_name);
+            editUser(uniqueArt,3,"Job Title : ",data.job_title);
+            editUser(uniqueArt,4,"Email : ",data.email);
         }else if(this.status === 404 && this.readyState === 4){
 
-            alert("Une erreur est survenue, veuillez rafraîchir la page")
+            alert("Une erreur est survenue, veuillez recharger la page")
 
         }else if(this.status === 400 && this.readyState === 4){
 

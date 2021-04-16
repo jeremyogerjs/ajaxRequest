@@ -1,25 +1,70 @@
 
 const employer = document.querySelector('#employer');
+let editArticle = null;
 const form = document.querySelector('form');
 const exitForm = form.firstElementChild;
-let editArticle = null;
+
+const uniqueArt = document.querySelector('.unique');
+const exitArt = uniqueArt.firstElementChild;
+
+const btnDelete = uniqueArt.lastElementChild.previousElementSibling;
+const btnEdit = uniqueArt.lastElementChild;
+
 const btnCreate = document.querySelector('.create');
 const refresh = document.querySelector('.refresh');
 
+/**
+ * 
+ * 
+ *              Event Button
+ * 
+ * 
+ */
+//BTN of navbar "rafraichir"
 refresh.addEventListener('click',function(){
+    employer.innerHTML = '';
     reqData();
 })
+//BTN to navbar "CREATE"
 btnCreate.addEventListener('click',function(e){
     e.preventDefault();
+    resetStyle(uniqueArt);
     form.id = e.target.id;
     form.lastElementChild.name = "submit";
+    form.style.right = "calc(50% - 180px)";
     form.style.opacity = "1";
     form.style.pointerEvents = "all";
 });
-exitForm.addEventListener('click',function(){
-    form.style.opacity = 0;
-    form.style.pointerEvents = "none";
+
+//Event for btn to unique article when click on btnMore 
+btnDelete.addEventListener('click',function(e) {
+    let delConf = confirm("Etes vous sur de vouloir supprimé ?");
+    if(delConf){
+        removeData(e);
+    }
 });
+btnEdit.addEventListener('click',function(e){
+    form.id = e.target.id;
+    form.lastElementChild.name = "Edit";
+    form.style.opacity = "1";
+    form.style.pointerEvents = "all";  
+    form.style.right = "calc(50% - 550px)";     
+});
+exitArt.addEventListener('click',function(){
+    resetStyle(uniqueArt);
+})
+
+/**
+ * 
+ *             Event of formulaire
+ * 
+ */
+//BTN exit "X" to form
+exitForm.addEventListener('click',function(){
+    
+    resetStyle(form);
+});
+
 form.addEventListener('submit',function(e){
     e.preventDefault();
 
@@ -35,12 +80,11 @@ form.addEventListener('submit',function(e){
         createData(mail,job,name,lastName);     //Send request POST with value of form in params 
 
         //reset style of form
-        form.style.pointerEvents = "none";
-        form.style.opacity = '0';
-    }else if( btnName === "edit"){
+        resetStyle(form);
+    }else if( btnName === "Edit"){
         editData(e.target.id,mail,job,name,lastName);  //Send Request PUT with value of form in params 
-        form.style.opacity = "0";
-        form.style.pointerEvents = "none";
+
+        resetStyle(form);
     }
 });
 /**
@@ -80,6 +124,7 @@ function showData(data){
         CreateArticle(data[i]);
     };
 };
+
 /**
  * 
  *               Create all article
@@ -88,15 +133,7 @@ function CreateArticle(data){
     
     //container
     const article = createElem(null,'article',data.id);
-
     //Contenu Container
-    const labelEmail =  createElem("Email : ",'span',null);
-    const email = createElem(data.email,'p',null);
-    email.prepend(labelEmail);
-
-    const labelJob = createElem("Job-title : ",'span',null);
-    const job = createElem(data.job_title,'p',null);
-    job.prepend(labelJob);
 
     const labelLastName = createElem("Last-Name : ",'span',null);
     const lastName = createElem(data.last_name,'p',null);
@@ -108,50 +145,33 @@ function CreateArticle(data){
 
     //Button
     const btnMore = createBtn('View More','More',data.id);
-    
-    article.appendChild(btnMore);
+   
+    //event BTN
+    btnMore.addEventListener('click',function(e){
+        uniqueArt.style.opacity = 1;
+        uniqueArt.id = e.target.id;
+        btnDelete.id = e.target.id;
+        btnEdit.id = e.target.id;
+        uniqueArt.style.pointerEvents = "all";
+        editArticle = e.target.parentElement;
+        MoreData(e);
+    })
     //Data
     article.appendChild(name);
     article.appendChild(lastName); 
     //button
-    article.appendChild(btnGrp);
+    article.appendChild(btnMore);
     
     //Data in container
     employer.appendChild(article);
+    
 };
 
 /**
  * 
- *               Create unique article
+ *             Reset Style
  */
-
-function CreateUniqueArticle(data){
-    CreateArticle(data)
-
-    const btnDelete = createBtn('Delete','Delete',data.id);
-    const btnEdit = createBtn('Edit',"edit",data.id);
-
-    const btnGrp = createElem(null,'div',null); 
-    btnGrp.appendChild(btnEdit);
-    btnGrp.appendChild(btnMore);
-    btnGrp.appendChild(btnDelete);
-
-    //Add event for all button
-    btnDelete.addEventListener('click',function(e) {
-        let delConf = confirm("Etes vous sur de vouloir supprimé ?");
-        if(delConf){
-            removeData(e);
-        }
-    });
-    btnEdit.addEventListener('click',function(e){
-        form.id = e.target.id;
-        form.lastElementChild.name = "edit";
-        form.style.opacity = "1";
-        form.style.pointerEvents = "all";
-        editArticle = e.target.parentElement.parentElement;          
-    });
-    
-    btnMore.addEventListener('click',function(e){
-        MoreData(e);
-    });
+function resetStyle(elem){
+    elem.style.opacity = "0";
+    elem.style.pointerEvents = 'none';
 }

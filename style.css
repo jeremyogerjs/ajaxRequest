@@ -4,17 +4,6 @@ body{
     padding: 0;
     font-family: 'Oxygen', sans-serif;
 }
-
-.bg{
-    background-color: transparent;
-    width: 0;
-    height: 100%;
-    position: absolute;
-    pointer-events: all;
-}
-.bg.active{
-    width:100%;
-}
 h1{
     font-weight: 700;
     text-transform: uppercase;
@@ -36,6 +25,13 @@ button{
     text-transform: uppercase;
     cursor:pointer;
 }
+section{
+    width:80%;
+    margin: 5em auto;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 20px;  
+}
 
 section article {
     list-style: none;
@@ -56,13 +52,14 @@ form{
     padding: 4em;
     position: fixed;
     top:calc(50% - 180px);
-    right:calc(50% - 180px);
+    right:calc(50% - 550px);
     background-color: #fff;
     opacity: 0;
     transition: opacity .35s ease-in-out;
     z-index: 2;
     pointer-events: none;
 }
+
 form label{
     font-weight: 700;
 }
@@ -93,17 +90,6 @@ form span{
     color: red;
     cursor: pointer;
 }
-
-
-section{
-    width:80%;
-    margin: 5em auto;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 20px;
-    border:1px solid black;   
-}
-
 article div{
     width: 100%;
     display: flex;
@@ -114,4 +100,43 @@ article button{
     padding: 1em;
     width: max-content;
     text-align: center;
+}
+.unique{
+    position: fixed;
+    width: max-content;
+    background-color: #d1d1d1;
+    color: #333;
+    font-size: 1.5em;
+    padding: 1em 4em 1em .5em;
+    font-weight: bold;
+    border: 1px solid forestgreen;
+    top:calc(50% - 180px);
+    right:calc(50% - 180px);
+    opacity: 0;
+    pointer-events: none;
+    transition: All .5s ease-in-out;
+}
+.unique >span:first-child{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: xx-large;
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+
+}
+.unique p {
+    padding: 0;
+}
+
+@media screen and (max-width:450px) {
+    .unique{
+       right: 20%;
+       font-size: 1em;
+       
+    }
+    form{
+        right: 15%;
+    }
 }
