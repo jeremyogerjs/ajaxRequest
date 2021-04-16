@@ -2,10 +2,13 @@
 const employer = document.querySelector('#employer');
 const form = document.querySelector('form');
 const exitForm = form.firstElementChild;
-console.log(exitForm)
 let editArticle = null;
 const btnCreate = document.querySelector('.create');
+const refresh = document.querySelector('.refresh');
 
+refresh.addEventListener('click',function(){
+    reqData();
+})
 btnCreate.addEventListener('click',function(e){
     e.preventDefault();
     form.id = e.target.id;
@@ -28,7 +31,9 @@ form.addEventListener('submit',function(e){
     const lastName = e.target[3].value;
 
     if(btnName === "submit"){
+        
         createData(mail,job,name,lastName);     //Send request POST with value of form in params 
+
         //reset style of form
         form.style.pointerEvents = "none";
         form.style.opacity = '0';
@@ -77,7 +82,7 @@ function showData(data){
 };
 /**
  * 
- *               Create unique article
+ *               Create all article
  */
 function CreateArticle(data){
     
@@ -102,26 +107,10 @@ function CreateArticle(data){
     name.prepend(labelName);
 
     //Button
-    const btnDelete = createBtn('Delete','Delete',data.id);
-    const btnEdit = createBtn('Edit',"edit",data.id);
-    const btnGrp = createElem(null,'div',null);
-    btnGrp.appendChild(btnEdit);
-    btnGrp.appendChild(btnDelete);
-
-    //Add event for all button
-    btnDelete.addEventListener('click',function(e) {
-        removeData(e);
-    });
-    btnEdit.addEventListener('click',function(e){
-        form.id = e.target.id;
-        form.lastElementChild.name = "edit";
-        form.style.opacity = "1";
-        form.style.pointerEvents = "all";
-        editArticle = e.target.parentElement.parentElement;          
-    });        
+    const btnMore = createBtn('View More','More',data.id);
+    
+    article.appendChild(btnMore);
     //Data
-    article.appendChild(email);
-    article.appendChild(job);
     article.appendChild(name);
     article.appendChild(lastName); 
     //button
@@ -130,3 +119,39 @@ function CreateArticle(data){
     //Data in container
     employer.appendChild(article);
 };
+
+/**
+ * 
+ *               Create unique article
+ */
+
+function CreateUniqueArticle(data){
+    CreateArticle(data)
+
+    const btnDelete = createBtn('Delete','Delete',data.id);
+    const btnEdit = createBtn('Edit',"edit",data.id);
+
+    const btnGrp = createElem(null,'div',null); 
+    btnGrp.appendChild(btnEdit);
+    btnGrp.appendChild(btnMore);
+    btnGrp.appendChild(btnDelete);
+
+    //Add event for all button
+    btnDelete.addEventListener('click',function(e) {
+        let delConf = confirm("Etes vous sur de vouloir supprimé ?");
+        if(delConf){
+            removeData(e);
+        }
+    });
+    btnEdit.addEventListener('click',function(e){
+        form.id = e.target.id;
+        form.lastElementChild.name = "edit";
+        form.style.opacity = "1";
+        form.style.pointerEvents = "all";
+        editArticle = e.target.parentElement.parentElement;          
+    });
+    
+    btnMore.addEventListener('click',function(e){
+        MoreData(e);
+    });
+}

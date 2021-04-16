@@ -57,10 +57,10 @@ function editData(id,email,job,name,lastName){
             const data = JSON.parse(xhr.responseText);
             alert("La modification a bien été pris en compte");
 
-            editUser(editArticle,0,"Email : ",data.email);
-            editUser(editArticle,1,"Job-title : ",data.job_title);
-            editUser(editArticle,2,"NAME : ",data.name);
-            editUser(editArticle,3,"Last-Name : ",data.last_name);
+            //editUser(editArticle,0,"Email : ",data.email);
+            //editUser(editArticle,1,"Job-title : ",data.job_title);
+            editUser(editArticle,0,"NAME : ",data.name);
+            editUser(editArticle,1,"Last-Name : ",data.last_name);
 
         }else if(this.status === 404 && this.readyState === 4){
             alert("Une erreur est survenue, veuillez rafraîchir la page");
@@ -98,6 +98,33 @@ function removeData(elem){
     xhr.open("DELETE",urlDel);
     xhr.send();
 };
+
+/**
+ * 
+ *                              request GET for one Data in API
+ */
+ function MoreData(elem){
+    let urlMore = url + "/" + elem.target.id;
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        
+        if(this.status === 200 && this.readyState === 4 ){
+            const data = JSON.parse(xhr.responseText);
+            console.log(data);
+        }else if(this.status === 404 && this.readyState === 4){
+
+            alert("Une erreur est survenue, veuillez rafraîchir la page")
+
+        }else if(this.status === 400 && this.readyState === 4){
+
+            alert("Une erreur est survenue,la requête n'a pas abouti")
+        }
+    };
+    xhr.open("GET",urlMore);
+    xhr.send();
+};
+
+
 /**
  * 
  *                              request GET for all Data in API
