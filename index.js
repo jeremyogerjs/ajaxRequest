@@ -189,7 +189,6 @@ function CreateArticle(data){
     employer.appendChild(article);
     
 };
-<<<<<<< HEAD
 /**
  * 
  *               Create unique article
@@ -225,6 +224,3 @@ function CreateUniqueArticle(data){
         MoreData(e);
     });
 }
-=======
-
->>>>>>> f9c16684cd3bc21587a758249026151de0698168
