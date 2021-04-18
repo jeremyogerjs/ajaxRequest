@@ -119,7 +119,6 @@ function CreateArticle(data){
     //Data in container
     employer.appendChild(article);
 };
-
 /**
  * 
  *               Create unique article
