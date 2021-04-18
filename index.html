@@ -19,19 +19,30 @@
     </nav>
         <form>
             <span>X</span>
-            <label for="email">Email :</label>
-            <input type="email" name="email" id="email">
-            <label for="job">Job Title : </label>
-            <input type="text" name="job" id="job">
-            <label for="name">Name : </label>
-            <input type="text"  name="name" id="name">
-            <label for="lastName">Last Name : </label>
-            <input type="text" name="lastName" id="lastName">
+            <label for="email">*Email :</label>
+            <input type="email" name="email" id="email" required>
+            <label for="job">*Job Title : </label>
+            <input type="text" name="job" id="job" required>
+            <label for="name">*Name : </label>
+            <input type="text"  name="name" id="name" required>
+            <label for="lastName">*Last Name : </label>
+            <input type="text" name="lastName" id="lastName" required>
+            <i>All input with this symbol (*) is require.</i>
             <input type="submit" name="submit">
         </form>
+        <article class="unique">
+            <span>X</span>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <button name="Delete">Delete</button>
+            <button name="Edit">Edit</button>
+        </article>
     <section id="employer">
         <!--   Here is to function createArticle append -->
     </section>
+    
     <script src="./requete.js"></script>
     <script src="./index.js"></script>
 </body>
