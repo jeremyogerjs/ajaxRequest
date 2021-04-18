@@ -1,6 +1,11 @@
 
 const employer = document.querySelector('#employer');
+
+//init variable to stock elem for edit 
 let editArticle = null;
+//init variable to stock elem for delete 
+let delArticle = null;
+
 const form = document.querySelector('form');
 const exitForm = form.firstElementChild;
 
@@ -39,8 +44,10 @@ btnCreate.addEventListener('click',function(e){
 //Event for btn to unique article when click on btnMore 
 btnDelete.addEventListener('click',function(e) {
     let delConf = confirm("Etes vous sur de vouloir supprimé ?");
+    
     if(delConf){
         removeData(e);
+        delArticle.remove();
     }
 });
 btnEdit.addEventListener('click',function(e){
@@ -83,24 +90,40 @@ form.addEventListener('submit',function(e){
         resetStyle(form);
     }else if( btnName === "Edit"){
         editData(e.target.id,mail,job,name,lastName);  //Send Request PUT with value of form in params 
-
         resetStyle(form);
     }
 });
 /**
  * 
  *  
- *      modify value in HTML of article Editing   
+ *         modify value in HTML of article Editing   
  *  
  */
 function editUser(elem,i,text,data){
     const element = elem.children[i].innerText = text + data;
     return element;
 };
-
 /**
  * 
- *               Create element
+ *             Reset Style
+ */
+ function resetStyle(elem){
+    elem.style.opacity = "0";
+    elem.style.pointerEvents = 'none';
+}
+/**
+ *  
+ *         remove data in uniqueArticle
+ *    
+*/
+function removeUser(elem){
+    for(let i = 1; i < elem.parentElement.children.length-2;i++){
+        elem.parentElement.children[i].innerText = '';
+    }
+}
+/**
+ * 
+ *               Create element DOM
  */
 function createElem(text,elem,id){
     const element = document.createElement(elem);
@@ -124,7 +147,6 @@ function showData(data){
         CreateArticle(data[i]);
     };
 };
-
 /**
  * 
  *               Create all article
@@ -133,7 +155,7 @@ function CreateArticle(data){
     
     //container
     const article = createElem(null,'article',data.id);
-    //Contenu Container
+    //Content Container
 
     const labelLastName = createElem("Last-Name : ",'span',null);
     const lastName = createElem(data.last_name,'p',null);
@@ -149,6 +171,7 @@ function CreateArticle(data){
     //event BTN
     btnMore.addEventListener('click',function(e){
         uniqueArt.style.opacity = 1;
+        delArticle = e.target.parentElement;
         uniqueArt.id = e.target.id;
         btnDelete.id = e.target.id;
         btnEdit.id = e.target.id;
@@ -167,11 +190,3 @@ function CreateArticle(data){
     
 };
 
-/**
- * 
- *             Reset Style
- */
-function resetStyle(elem){
-    elem.style.opacity = "0";
-    elem.style.pointerEvents = 'none';
-}
