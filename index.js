@@ -1,4 +1,4 @@
-
+//container of all article
 const employer = document.querySelector('#employer');
 
 //init variable to stock elem for edit 
@@ -7,17 +7,17 @@ let editArticle = null;
 let delArticle = null;
 
 const form = document.querySelector('form');
-const exitForm = form.firstElementChild;
-
 const uniqueArt = document.querySelector('.unique');
-const exitArt = uniqueArt.firstElementChild;
-
-const btnDelete = uniqueArt.lastElementChild.previousElementSibling;
-const btnEdit = uniqueArt.lastElementChild;
-
+//btn to exitModal
+const exitModal = document.querySelectorAll('.delete');
+//Btn of article in section
+const btnDelete = uniqueArt.lastElementChild.firstElementChild;
+const btnEdit = btnDelete.nextElementSibling;
+//Btn of NavBar
 const btnCreate = document.querySelector('.create');
 const refresh = document.querySelector('.refresh');
 
+const bgModal = document.querySelectorAll('.modal-background');
 /**
  * 
  * 
@@ -26,72 +26,82 @@ const refresh = document.querySelector('.refresh');
  * 
  */
 //BTN of navbar "rafraichir"
-refresh.addEventListener('click',function(){
+refresh.addEventListener('click',function()
+{
     employer.innerHTML = '';
     reqData();
-})
+});
 //BTN to navbar "CREATE"
-btnCreate.addEventListener('click',function(e){
+btnCreate.addEventListener('click',function(e)
+{
     e.preventDefault();
-    resetStyle(uniqueArt);
     form.id = e.target.id;
     form.lastElementChild.name = "submit";
-    form.style.right = "calc(50% - 180px)";
-    form.style.opacity = "1";
-    form.style.pointerEvents = "all";
+    form.parentElement.classList.toggle('is-active'); 
 });
-
 //Event for btn to unique article when click on btnMore 
-btnDelete.addEventListener('click',function(e) {
+btnDelete.addEventListener('click',function(e) 
+{
     let delConf = confirm("Etes vous sur de vouloir supprimé ?");
-    
-    if(delConf){
+    if(delConf)
+    {
         removeData(e);
         delArticle.remove();
-    }
+    };
 });
-btnEdit.addEventListener('click',function(e){
+btnEdit.addEventListener('click',function(e)
+{
     form.id = e.target.id;
-    form.lastElementChild.name = "Edit";
-    form.style.opacity = "1";
-    form.style.pointerEvents = "all";  
-    form.style.right = "calc(50% - 550px)";     
+    form.lastElementChild.lastElementChild.firstElementChild.name = "Edit";
+    form.parentElement.classList.toggle('is-active');  
 });
-exitArt.addEventListener('click',function(){
-    resetStyle(uniqueArt);
-})
 
+/**
+ * 
+ *                      Event for closing Modals
+ * 
+ */
+
+//add event to close modal for unique art and form.
+exitModal[1].addEventListener('click',function()
+{
+    uniqueArt.parentElement.classList.remove('is-active');
+}); 
+exitModal[0].addEventListener('click',function()
+{
+    form.parentElement.classList.remove('is-active');
+});
+//Close modal form or uniqueArt on bg
+for(let i=0;i<bgModal.length;i++)
+{
+    bgModal[i].addEventListener('click',()=>
+    {
+        bgModal[i].parentElement.classList.remove('is-active');
+    });
+};
 /**
  * 
  *             Event of formulaire
  * 
  */
-//BTN exit "X" to form
-exitForm.addEventListener('click',function(){
-    
-    resetStyle(form);
-});
-
-form.addEventListener('submit',function(e){
+form.addEventListener('submit',function(e)
+{
     e.preventDefault();
-
     //All input value of form
-    const btnName = e.target[4].name;
-    const mail = e.target[0].value;
-    const job = e.target[1].value;
-    const name = e.target[2].value;
-    const lastName = e.target[3].value;
+    const btnName = e.target[5].name;
+    const mail = e.target[1].value;
+    const job = e.target[2].value;
+    const name = e.target[3].value;
+    const lastName = e.target[4].value;
 
-    if(btnName === "submit"){
-        
+    if(btnName === "submit")
+    {
         createData(mail,job,name,lastName);     //Send request POST with value of form in params 
-
-        //reset style of form
-        resetStyle(form);
-    }else if( btnName === "Edit"){
-        editData(e.target.id,mail,job,name,lastName);  //Send Request PUT with value of form in params 
-        resetStyle(form);
     }
+    else if( btnName === "Edit")
+    {
+        editData(e.target.id,mail,job,name,lastName);  //Send Request PUT with value of form in params    
+    };
 });
 /**
  * 
@@ -99,39 +109,36 @@ form.addEventListener('submit',function(e){
  *         modify value in HTML of article Editing   
  *  
  */
-function editUser(elem,i,text,data){
+function editUser(elem,i,text,data)
+{
     const element = elem.children[i].innerText = text + data;
     return element;
 };
-/**
- * 
- *             Reset Style
- */
- function resetStyle(elem){
-    elem.style.opacity = "0";
-    elem.style.pointerEvents = 'none';
-}
 /**
  *  
  *         remove data in uniqueArticle
  *    
 */
-function removeUser(elem){
-    for(let i = 1; i < elem.parentElement.children.length-2;i++){
+function removeUser(elem)
+{
+    for(let i = 1; i < elem.parentElement.children.length-2;i++)
+    {
         elem.parentElement.children[i].innerText = '';
-    }
-}
+    };
+};
 /**
  * 
  *               Create element DOM
  */
-function createElem(text,elem,id){
+function createElem(text,elem,id)
+{
     const element = document.createElement(elem);
     element.innerText = text;
     element.id = id;
     return element;
 };
-function createBtn(text,name,id){
+function createBtn(text,name,id)
+{
     const element = document.createElement('button');
     element.innerText = text;
     element.id = id;
@@ -142,7 +149,8 @@ function createBtn(text,name,id){
  * 
  *               Create All user in HTML
  */
-function showData(data){
+function showData(data)
+{
     for(let i=0;i< data.length;i++){
         CreateArticle(data[i]);
     };
@@ -151,12 +159,13 @@ function showData(data){
  * 
  *               Create all article
  */
-function CreateArticle(data){
-    
+function CreateArticle(data)
+{
     //container
     const article = createElem(null,'article',data.id);
-    //Content Container
+    article.className = 'card column is-one-quarter';
 
+    //Content Container
     const labelLastName = createElem("Last-Name : ",'span',null);
     const lastName = createElem(data.last_name,'p',null);
     lastName.prepend(labelLastName);
@@ -167,26 +176,23 @@ function CreateArticle(data){
 
     //Button
     const btnMore = createBtn('View More','More',data.id);
-   
+    btnMore.className = 'button is-info'
     //event BTN
-    btnMore.addEventListener('click',function(e){
-        uniqueArt.style.opacity = 1;
+    btnMore.addEventListener('click',function(e)
+    {
+        uniqueArt.parentElement.classList.toggle('is-active');
         delArticle = e.target.parentElement;
         uniqueArt.id = e.target.id;
         btnDelete.id = e.target.id;
         btnEdit.id = e.target.id;
-        uniqueArt.style.pointerEvents = "all";
         editArticle = e.target.parentElement;
         MoreData(e);
-    })
+    });
     //Data
     article.appendChild(name);
     article.appendChild(lastName); 
     //button
     article.appendChild(btnMore);
-    
     //Data in container
     employer.appendChild(article);
-    
 };
-

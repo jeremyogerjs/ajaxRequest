@@ -1,142 +1,51 @@
-body{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Oxygen', sans-serif;
-}
-h1{
-    font-weight: 700;
-    text-transform: uppercase;
-}
-nav{
-    position: fixed;
-    width: 100%;
-    display: flex;
+.navbar{
     justify-content: center;
-    align-items: center;
-    background-color: #d1d1d1;
-    top: 0;
-}
-button{
-    border: none;
-    border-radius: 20px;
-    padding: 1em 2em;
-    background-color: #727070;
-    text-transform: uppercase;
-    cursor:pointer;
-}
-section{
-    width:80%;
-    margin: 5em auto;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 20px;  
 }
 
-section article {
-    list-style: none;
+.first{
+    z-index: 45;
+}
+
+.help,.last {
+    margin: .25rem auto;
     width: max-content;
-    border-radius: 20px;
-    border:1px solid black; 
-    padding: 1em;
-    width: 400px;
-    margin: 2em auto;
 }
-section article p {
-    padding: .5em 0;
+.first form{
+    background-color: rgba(10,10,10,.5);
 }
-
-form{
-    width: 180px;
-    border-radius: 20px;
-    padding: 4em;
-    position: fixed;
-    top:calc(50% - 180px);
-    right:calc(50% - 550px);
-    background-color: #fff;
-    opacity: 0;
-    transition: opacity .35s ease-in-out;
-    z-index: 2;
-    pointer-events: none;
+.first .field{
+    padding: 0 2em;
 }
-
-form label{
-    font-weight: 700;
-}
-form input{
-    width: 100%;
-    margin: .5em 0;
-    padding: .2em;
-}
-form [type=submit]{
-    cursor: pointer;
-    width: 100%;
-    border: none;
-    background-color: forestgreen;
+.first label,.first{
     color: white;
-    padding: 1em;
-    margin: 1em auto;
+}
+.modal-background{
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-form [type=submit]:hover{
-    background-color: rgb(31, 189, 31);
+.unique{
+    color: white;
+    background-color: rgba(10,10,10,.5);
+    border-radius: 5px;
+    padding: 0 0 .75em;
 }
-form span{
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    font-size: xx-large;
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
+.unique p{
+    padding: .5em;
 }
-article div{
-    width: 100%;
-    display: flex;
+.buttons{
     justify-content: space-around;
 }
-article button{
-    cursor: pointer;
-    padding: 1em;
-    width: max-content;
+.title{
     text-align: center;
+    padding: 2em 0;
+    text-transform: uppercase;
 }
-.unique{
-    position: fixed;
-    width: max-content;
-    background-color: #d1d1d1;
-    color: #333;
-    font-size: 1.5em;
-    padding: 1em 4em 1em .5em;
-    font-weight: bold;
-    border: 1px solid forestgreen;
-    top:calc(50% - 180px);
-    right:calc(50% - 180px);
-    opacity: 0;
-    pointer-events: none;
-    transition: All .5s ease-in-out;
+.create{
+    margin-right: .5em;
 }
-.unique >span:first-child{
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    font-size: xx-large;
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
-
+.column{
+    margin: .5em;
 }
-.unique p {
-    padding: 0;
-}
-
-@media screen and (max-width:450px) {
-    .unique{
-       right: 20%;
-       font-size: 1em;
-       
-    }
-    form{
-        right: 15%;
-    }
+.columns{
+    justify-content: center
 }

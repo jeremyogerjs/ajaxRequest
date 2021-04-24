@@ -6,42 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <link rel="stylesheet" href="./style.css">
     <title>AjaxRequest</title>
 </head>
 <body>
-    <nav>
-        <h1>My List to employ</h1>
-        <ul>
-            <button class="create" name="submit">Create</button>
-            <button class="refresh" name="refresh">Rafraichir</button>
-        </ul>
+    <h1 class="title">My List to employ</h1>
+    <nav class="navbar is-transparent is-half"> 
+        
+        <button class="create button is-primary " name="submit">Create</button>
+        <button class="refresh button is-light " name="refresh">Refresh</button> 
+  
     </nav>
-        <form>
-            <span>X</span>
-            <label for="email">*Email :</label>
-            <input type="email" name="email" id="email" required>
-            <label for="job">*Job Title : </label>
-            <input type="text" name="job" id="job" required>
-            <label for="name">*Name : </label>
-            <input type="text"  name="name" id="name" required>
-            <label for="lastName">*Last Name : </label>
-            <input type="text" name="lastName" id="lastName" required>
-            <i>All input with this symbol (*) is require.</i>
-            <input type="submit" name="submit">
+    <div class="modal first ">
+        <div class="modal-background"></div>
+        <form class="modal-content is-one-fifth">
+            <header class="modal-card-head">
+                <button class="delete" aria-label="close"></button>
+            </header>
+
+            <div class="field">
+                <label class="label" for="email">* Email :</label>
+                <div class="control">
+                    <input class="input" type="email" name="email" id="email" placeholder="example@example.com" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="job">* Job Title : </label>
+                <div class="control">
+                    <input class="input" type="text" name="job" id="job" placeholder="Carpenter" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="name">* Name : </label>
+                <div class="control">
+                    <input class="input" type="text"  name="name" id="name" placeholder="Name" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="lastName">* Last Name : </label>
+                <div class="control">
+                    <input class="input" type="text" name="lastName" id="lastName" placeholder="LastName" required>
+                </div>
+            </div>
+            <div class="field">
+                <p class="help">All input with this symbol (*) is require.</p>
+                <div class="control last">
+                    <input class="button is-success" type="submit" name="submit" value="Submit">
+                </div>
+            </div>
         </form>
-        <article class="unique">
-            <span>X</span>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <button name="Delete">Delete</button>
-            <button name="Edit">Edit</button>
-        </article>
-    <section id="employer">
-        <!--   Here is to function createArticle append -->
-    </section>
+    </div>
+        <section class="modal">
+            <div class="modal-background"></div>
+            <article class="modal-content unique">
+                <header class="modal-card-head">
+                    <button class="delete" aria-label="close"></button>
+                </header>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <div class="buttons">
+                    <button class="button is-danger" name="Delete">Delete</button>
+                    <button class="button is-primary" name="Edit">Edit</button>
+                </div>
+
+            </article>
+        </section>
+        <div class="container">
+            <section id="employer" class=" columns is-multiline">
+                <!--   Here is to function createArticle append -->
+            </section>
+
+        </div>
     
     <script src="./requete.js"></script>
     <script src="./index.js"></script>
