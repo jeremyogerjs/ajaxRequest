@@ -126,7 +126,6 @@ function removeUser(elem)
         elem.parentElement.children[i].innerText = '';
     };
 };
-
 /**
  * 
  *               Create element DOM
@@ -196,4 +195,40 @@ function CreateArticle(data)
     article.appendChild(btnMore);
     //Data in container
     employer.appendChild(article);
+    
 };
+/**
+ * 
+ *               Create unique article
+ */
+
+function CreateUniqueArticle(data){
+    CreateArticle(data)
+
+    const btnDelete = createBtn('Delete','Delete',data.id);
+    const btnEdit = createBtn('Edit',"edit",data.id);
+
+    const btnGrp = createElem(null,'div',null); 
+    btnGrp.appendChild(btnEdit);
+    btnGrp.appendChild(btnMore);
+    btnGrp.appendChild(btnDelete);
+
+    //Add event for all button
+    btnDelete.addEventListener('click',function(e) {
+        let delConf = confirm("Etes vous sur de vouloir supprimé ?");
+        if(delConf){
+            removeData(e);
+        }
+    });
+    btnEdit.addEventListener('click',function(e){
+        form.id = e.target.id;
+        form.lastElementChild.name = "edit";
+        form.style.opacity = "1";
+        form.style.pointerEvents = "all";
+        editArticle = e.target.parentElement.parentElement;          
+    });
+    
+    btnMore.addEventListener('click',function(e){
+        MoreData(e);
+    });
+}
