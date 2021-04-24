@@ -126,6 +126,7 @@ function removeUser(elem)
         elem.parentElement.children[i].innerText = '';
     };
 };
+
 /**
  * 
  *               Create element DOM

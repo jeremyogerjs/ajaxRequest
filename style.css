@@ -1,11 +1,9 @@
 .navbar{
     justify-content: center;
 }
-
 .first{
     z-index: 45;
 }
-
 .help,.last {
     margin: .25rem auto;
     width: max-content;
@@ -22,7 +20,6 @@
 .modal-background{
     background-color: rgba(0, 0, 0, 0.5);
 }
-
 .unique{
     color: white;
     background-color: rgba(10,10,10,.5);

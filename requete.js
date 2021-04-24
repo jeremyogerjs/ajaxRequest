@@ -56,8 +56,7 @@ function editData(id,email,job,name,lastName)
     let urlEdit = url + "/" + id;
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function()
-    {
-        
+    { 
         if(this.status === 200 && this.readyState === 4 )
         {
             const data = JSON.parse(xhr.responseText);
