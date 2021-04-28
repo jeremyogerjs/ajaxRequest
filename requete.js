@@ -14,7 +14,7 @@ const url = "https://6057e432c3f49200173ad08d.mockapi.io/api/v1/employees";
         last_name:lastName,
         name:name
     };
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
  
     xhr.onreadystatechange = function()
     {
@@ -47,14 +47,14 @@ const url = "https://6057e432c3f49200173ad08d.mockapi.io/api/v1/employees";
 */
 function editData(id,email,job,name,lastName)
 {
+    const urlEdit = url + "/" + id;
     const params = {
         email: email,
         job_title:job,
         last_name:lastName,
         name:name
     };
-    let urlEdit = url + "/" + id;
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function()
     { 
         if(this.status === 200 && this.readyState === 4 )
@@ -88,9 +88,9 @@ function editData(id,email,job,name,lastName)
 
 function removeData(elem)
 {
-    let urlDel = url + "/" + elem.target.id;
+    const urlDel = url + "/" + elem.target.id;
 
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function()
     {
         if(this.status === 200 && this.readyState === 4 )
@@ -117,8 +117,8 @@ function removeData(elem)
  */
  function MoreData(elem)
  {
-    let urlMore = url + "/" + elem.target.id;
-    let xhr = new XMLHttpRequest();
+    const urlMore = url + "/" + elem.target.id;
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function()
     {
         if(this.status === 200 && this.readyState === 4 )
@@ -148,7 +148,7 @@ function removeData(elem)
  */
 function reqData()
 {
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function()
     {
         
@@ -163,7 +163,7 @@ function reqData()
         }
         else if(this.status === 400 && this.readyState === 4)
         {
-            alert("Une erreur est survenue,la requête n'a pas abouti nous tentons de résoudre le problème")
+            alert("Une erreur est survenue,la requête n'a pas abouti nous tentons de résoudre le problème");
         }
     };
     xhr.open("GET",url);

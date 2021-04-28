@@ -17,6 +17,7 @@ const btnEdit = btnDelete.nextElementSibling;
 const btnCreate = document.querySelector('.create');
 const refresh = document.querySelector('.refresh');
 
+//background when modal is open
 const bgModal = document.querySelectorAll('.modal-background');
 /**
  * 
@@ -71,8 +72,8 @@ exitModal[0].addEventListener('click',function()
 {
     form.parentElement.classList.remove('is-active');
 });
-//Close modal form or uniqueArt on bg
-for(let i=0;i<bgModal.length;i++)
+//Close modal form or uniqueArt onclick on bg
+for(let i=0;i<bgModal.length;i++)   //bgmodal === nodelist (class) 
 {
     bgModal[i].addEventListener('click',()=>
     {
@@ -96,11 +97,11 @@ form.addEventListener('submit',function(e)
 
     if(btnName === "submit")
     {
-        createData(mail,job,name,lastName);     //Send request POST with value of form in params 
+        createData(mail,job,name,lastName);     //Send request POST with value of form in args 
     }
     else if( btnName === "Edit")
     {
-        editData(e.target.id,mail,job,name,lastName);  //Send Request PUT with value of form in params    
+        editData(e.target.id,mail,job,name,lastName);  //Send Request PUT with value of form in args    
     };
 });
 /**
@@ -163,7 +164,7 @@ function CreateArticle(data)
 {
     //container
     const article = createElem(null,'article',data.id);
-    article.className = 'card column is-one-quarter';
+    article.className = 'card column is-one-quarter';   
 
     //Content Container
     const labelLastName = createElem("Last-Name : ",'span',null);
